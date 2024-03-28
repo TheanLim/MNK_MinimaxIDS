@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MNK Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="prototype.js"></script>
+  <script src="mnk.js"></script>
+  <script src="minimax.js"></script>
+  <script src="utility.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div id="game-container">
+      <div id="game-board"></div>
+      <div id="game-info">
+        <p>Current Player: <span id="current-player"></span></p>
+        <p>Results: <span id="results"></span></p>
+      </div>
+    </div>
+    <div class="sidebar">
+      <label for="m">Enter M:</label>
+      <input type="number" id="m" value="3"><br>
+      <label for="n">Enter N:</label>
+      <input type="number" id="n" value="3"><br>
+      <label for="k">Enter K:</label>
+      <input type="number" id="k" value="3"><br>
+      <label for="players">Enter Players (comma-separated):</label>
+      <input type="text" id="players" value="X,O"><br>
+      <label>Starting Player:</label><br>
+      <input type="radio" id="userStart" name="startingPlayer" value="user" checked>
+      <label for="userStart">User</label><br>
+      <input type="radio" id="aiStart" name="startingPlayer" value="ai">
+      <label for="aiStart">AI</label><br>
+      <div class="dropdown">
+        <button id="options-button">Show Advanced Options</button>
+        <div class="dropdown-content">
+          <label for="search-time">Search Time (ms):</label>
+          <input type="number" id="search-time" value="5000"><br>
+          <label for="search-depth">Search Depth:</label>
+          <input type="number" id="search-depth" value="3"><br>
+        </div>
+      </div>
+      <button id="start-game-button" >Start Game</button>
+  </div>
+</body>
+</html>
