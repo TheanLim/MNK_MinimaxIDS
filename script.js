@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const playersInput = document.getElementById("players").value.split(',');
         const PLAYERS = playersInput.length === 2 ? playersInput : ['X', 'O'];
         const startingPlayer = document.querySelector('input[name="startingPlayer"]:checked').value;
-        const searchTime = parseInt(document.getElementById("search-time").value);
+        const searchTime = 5000;
         const searchDepth = parseInt(document.getElementById("search-depth").value);
 
         let game;
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
         let agent = new MinimaxIDS(searchTime, searchDepth, utilityMNK, cacheExpansion, true, true);
-        
+
         renderBoard();
         if (startingPlayer === 'ai') {
             showLoadingPopup(); // Show loading pop-up before agent search
