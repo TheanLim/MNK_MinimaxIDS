@@ -72,23 +72,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Function to render the game board
         function renderBoard() {
-            let gameBoard = document.getElementById("game-board");
-            gameBoard.innerHTML = "";
-            for (let j = 0; j < game.n; j++) {
-                let col = document.createElement("div");
-                for (let i = 0; i < game.m; i++) {
-                    let cell = document.createElement("div");
-                    cell.classList.add("cell");
-                    cell.textContent = game.board[i][j];
-                    cell.addEventListener("click", () => handleCellClick(i, j));
-                    if (game.winningSequence && game.winningSequence.includes(`${i},${j}`)) {
-                        cell.classList.add("winning-cell");
-                    }
-                    col.appendChild(cell);
-                }
-                gameBoard.appendChild(col);
+          let gameBoard = document.getElementById("game-board");
+          gameBoard.innerHTML = "";
+          for (let j = 0; j < game.n; j++) {
+            let col = document.createElement("div");
+            for (let i = 0; i < game.m; i++) {
+              let cell = document.createElement("div");
+              cell.classList.add("cell");
+              cell.textContent = game.board[i][j];
+              cell.addEventListener("click", () => handleCellClick(i, j));
+              
+              // Highlight winning cells
+              if (game.winningSequence && game.winningSequence.includes(`${i},${j}`)) {
+                cell.classList.add("winning-cell");
+              } 
+              // Highlight the last move if no winner
+              else if (
+                !game.isTerminal() &&
+                game.lastAction &&
+                game.lastAction.m === i &&
+                game.lastAction.n === j
+              ) {
+                cell.classList.add("last-move");
+              }
+              col.appendChild(cell);
             }
-            document.getElementById("current-player").textContent = game.getCurrentPlayerSign();
+            gameBoard.appendChild(col);
+          }
+          document.getElementById("current-player").textContent = game.getCurrentPlayerSign();
         }
 
         // Function to check if the game has ended
