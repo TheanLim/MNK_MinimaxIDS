@@ -71,7 +71,8 @@ button:hover {
 }
 
 .cell:hover {
-  background-color: #ccc;
+  background-color: #e0f7fa;
+  border-color: #00bcd4;
 }
 
 /* Game info styles */
@@ -210,4 +211,20 @@ input[type="radio"] + label:hover:before {
 
 .dropdown button:hover {
   background-color: #0056b3;
+}
+
+/* Highlight for the last move */
+.cell.last-move {
+  background-color: #ffe066;
+  animation: highlight 0.5s ease-in-out;
+}
+
+@keyframes highlight {
+  0% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
