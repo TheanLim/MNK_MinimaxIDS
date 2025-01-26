@@ -115,26 +115,27 @@ function getTimeInSeconds() {
     }
   
     storeCache(state, depth, alpha, beta, value) {
+        const cacheKey = `${state.getCacheKey()}-${depth}`;
         if (!alpha || !beta) {
           // No pruning happened
-          this.cache[`${JSON.stringify(state)}-${depth}`] = { flag: "__eq__", value };
+          this.cache[cacheKey] = { flag: "__eq__", value };
           return;
         }
     
         // Pruning might happen -> inaccurate value
         if (value <= alpha) {
-          this.cache[`${JSON.stringify(state)}-${depth}`] = { flag: "__leq__", value: value };
+          this.cache[cacheKey] = { flag: "__leq__", value: value };
         } else if (alpha < value < beta) {
-          this.cache[`${JSON.stringify(state)}-${depth}`] = { flag: "__eq__",  value: value };
+          this.cache[cacheKey] = { flag: "__eq__",  value: value };
         } else if (beta <= value){
-          this.cache[`${JSON.stringify(state)}-${depth}`] = { flag: "__geq__",  value: value };
+          this.cache[cacheKey] = { flag: "__geq__",  value: value };
         } else {
             throw new Error("Shouldn't get here.");
         }
       }
     
       readCache(state, depth, alpha, beta) {
-        const cacheKey = `${JSON.stringify(state)}-${depth}`;
+        const cacheKey = `${state.getCacheKey()}-${depth}`;
         if (!this.cache.hasOwnProperty(cacheKey)) {
           return { alpha, beta, value: null };
         }
