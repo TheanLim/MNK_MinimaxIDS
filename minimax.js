@@ -186,7 +186,7 @@ class MinimaxIDS extends Minimax {
         let action;
 
         while (getTimeInSeconds() < endTime && this.depth <= this.maxDepth) {
-            action = super.search(state, true); // Don't reset cache between depths
+            action = super.search(state, true); // Reset cache between IDS depths
             this.depth++;
         }
 
@@ -207,11 +207,17 @@ function linearExpansion(state, depth, cache) {
 function cacheExpansion(state, depth, cache) {
     if (!cache.size) return state.getActions();
 
-    let sortedActions = [...state.getActions()].sort((actionA, actionB) => {
-        let valueA = cache.get([state.takeAction(actionA), depth + 1])?.[1] || 0;
-        let valueB = cache.get([state.takeAction(actionB), depth + 1])?.[1] || 0;
-        return depth % 2 === 0 ? valueB - valueA : valueA - valueB;
-    });
+  const sortedActions = [...state.getActions()].sort((actionA, actionB) => {
+    const nextStateA = state.takeAction(actionA);
+    const cacheKeyA = `${nextStateA.getCacheKey()}-${depth + 1}`;
+    const valueA = cache[cacheKeyA]?.value || 0;
+    
+    const nextStateB = state.takeAction(actionB);
+    const cacheKeyB = `${nextStateB.getCacheKey()}-${depth + 1}`;
+    const valueB = cache[cacheKeyB]?.value || 0;
 
-    return sortedActions;
+    return state.isMaximizerTurn() ? valueA - valueB : valueB - valueA;
+  });
+
+  return sortedActions;
 }
