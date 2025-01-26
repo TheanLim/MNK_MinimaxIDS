@@ -19,7 +19,7 @@ class MNKAction {
 }
 
 class MNK {
-  constructor(m, n, k, playerSigns, emptySign = "-") {
+  constructor(m, n, k, playerSigns, emptySign = "-", aiPlayerSign) {
       if (k > Math.max(m, n)) {
           throw new Error("k has to be smaller or equal to max (m, n)");
       }
@@ -29,6 +29,7 @@ class MNK {
       this.m = m;
       this.n = n;
       this.k = k;
+      this.aiPlayerSign = aiPlayerSign;
       this.playerSigns = [...playerSigns];
       this.playerSignsRotation = [...playerSigns];
       this.emptySign = emptySign;
@@ -148,7 +149,7 @@ class MNK {
           throw new Error("Illegal Action.");
       }
 
-      const stateCopy = preserveState ? new MNK(this.m, this.n, this.k, this.playerSigns, this.emptySign) : this;
+      const stateCopy = preserveState ? new MNK(this.m, this.n, this.k, this.playerSigns, this.emptySign, this.aiPlayerSign) : this;
       stateCopy.playerSignsRotation = [...this.playerSignsRotation];
       stateCopy.remainingMoves = this.remainingMoves;
       stateCopy.lastAction = this.lastAction;
@@ -219,5 +220,9 @@ class MNK {
 
   equals(other) {
     return this.getCacheKey() === other.getCacheKey();
+  }
+
+  isMaximizerTurn() {
+    return this.getCurrentPlayerSign() === this.aiPlayerSign;
   }
 }

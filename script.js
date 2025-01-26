@@ -46,12 +46,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const playersInput = document.getElementById("players").value.split(',');
         const PLAYERS = playersInput.length === 2 ? playersInput : ['X', 'O'];
         const startingPlayer = document.querySelector('input[name="startingPlayer"]:checked').value;
+        let aiPlayerSign = startingPlayer === 'ai' ? PLAYERS[0] : PLAYERS[1];
         const searchTime = 5000;
         const searchDepth = parseInt(document.getElementById("search-depth").value);
 
         let game;
         try {
-            game = new MNK(M, N, K, PLAYERS);
+            game = new MNK(M, N, K, PLAYERS, '-', aiPlayerSign);
         } catch (error) {
             showMessage(`Error: ${error.message}`, 5000);
             return;

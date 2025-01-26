@@ -131,5 +131,5 @@ function utilityMNK(state, depth) {
     utility += calculateUtility(diagList);
   }
 
-  return depth % 2 === 1 ? -utility : utility;
+  return state.isMaximizerTurn() ? utility : -utility;
 }
